@@ -1,0 +1,353 @@
+import colorama, time, os
+from colorama import Fore, Back, Style
+from tkinter import *
+
+colorama.init()
+import sqlite3 as lite
+import datetime
+import smtplib, sys
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from email.mime.base import MIMEBase
+from email import encoders
+
+hiddenmodule = ['xlsxwriter', 'colorama']
+date = datetime.datetime.now()
+date = date.strftime("%x")
+print(date)
+workdate = "04/02/19"
+dateint = int(date[3:5])
+workdateint = int(workdate[3:5])
+STatten = ""
+con = lite.connect('ACM.db')
+cur = con.cursor()
+STname = ""
+STid = ""
+day = ""
+
+
+# os.system(r'C:\arbitrary\moce.exe')
+
+def a():
+    print(Fore.BLUE + """
+  __   __  __  __    ___  __  ____  _  _    ___  ____  _  _  ___  ___  _  _  ____     __  _  _   __   ___  ____  ___  ___  
+ (  ) / _)(  \/  )  (   \(  )(_  _)( )( )  / __)(_  _)( )( )(   \(  _)( \( )(_  _)   / _)( )( ) (  ) (  ,\(_  _)(  _)(  ,) 
+ /__\( (_  )    (    ) ) ))(   )(   )()(   \__ \  )(   )()(  ) ) )) _) )  (   )(    ( (_  )__(  /__\  ) _/  )(   ) _) )  \ 
+(_)(_)\__)(_/\/\_)  (___/(__) (__)  \__/   (___/ (__)  \__/ (___/(___)(_)\_) (__)    \__)(_)(_)(_)(_)(_)   (__) (___)(_)\_)
+
+        
+                                                                                                                                              """)
+    print(Style.RESET_ALL)
+
+
+a()
+while True:
+    print("""
+    1. Add Entry
+    2. Display Entry
+    3. Count Entry
+    4. Convert to Sheet
+    5. Send mail
+    6. Exit
+    """)
+    choice = input("Enter the option:")
+    if choice == "6":
+        a()
+        sys.exit(0)
+
+    elif choice == "3":
+        with con:
+            x = cur.execute("Select count(*) from Attend")
+            for i in x:
+                print("Total No. of Entry is-", i[0])
+
+    elif choice == "1":
+        class App(Frame):
+
+            def __init__(self, master):
+                super(App, self).__init__(master)
+                self.grid()
+                self.create_widgets()
+
+            def create_widgets(self):
+                self.inst_lbl = Label(self, text="Enter Details")
+                self.inst_lbl.grid(row=0, column=0, columnspan=2, sticky=W)
+                self.pw_lbl = Label(self, text="Name: ")
+                self.pw_lbl.grid(row=1, column=0, sticky=W)
+                self.pw_lbl = Label(self, text="Phone No.: ")
+                self.pw_lbl.grid(row=2, column=0, sticky=W)
+                self.name_ent = Entry(self)
+                self.name_ent.grid(row=1, column=1, sticky=W)
+                self.ph_ent = Entry(self)
+                self.ph_ent.grid(row=2, column=1, sticky=W)
+                self.submit_btn = Button(self, text="Submit", command=self.submit)
+                self.submit_btn.grid(row=3, column=0, sticky=W)
+
+            def submit(self):
+                STname = self.name_ent.get()
+                STid = self.ph_ent.get()
+                self.name_ent.delete(0, 'end')
+                self.ph_ent.delete(0, 'end')
+                if workdateint == dateint:  # Day 1
+                    day = "Day 1"
+                    print(day)
+                    err = True
+                    while err:
+                        with con:
+                            STatten = "1"
+                            cur = con.cursor()
+                            try:
+                                if cur.execute("INSERT INTO Attend(Id, Name, atten) values(?,?,?)",
+                                               (STid, STname, STatten)):
+                                    print("Added-")
+                                    print("Name:", STname)
+                                    print("Phone No.-", STid)
+                            except Exception as e:
+                                err = False
+
+                elif workdateint + 1 == dateint:  # Day 2
+                    day = "Day 2"
+                    print(day)
+                    cur = con.cursor()
+                    with con:
+                        x = cur.execute("SELECT atten,id FROM Attend")
+                        rows = cur.fetchall()
+                        for i in rows:
+                            newst = i[0][0:1] + "+0"
+                            sql = "update attend set atten=? where atten=? "
+                            up = newst, i[0]
+                            if len(i[0]) == 1:
+                                if cur.execute(sql, up):
+                                    print("Database Updated")
+                    con.commit()
+                    err = True
+                    while err:
+                        x = cur.execute("SELECT atten,id FROM Attend")
+                        rows = cur.fetchall()
+                        for i in rows:
+                            if i[1] == STid:
+                                try:
+                                    newst = i[0][0:1] + "+1"
+                                    sql = "update attend set atten=? where id=? "
+                                    up = newst, STid
+                                    if cur.execute(sql, up):
+                                        print("Updated-")
+                                        print("Name:", STname)
+                                        print("Phone No.-", STid)
+                                        err = False
+                                        con.commit()
+                                except Exception as e:
+                                    err = False
+                            elif err:
+                                try:
+                                    if cur.execute("INSERT INTO Attend(Id, Name, atten) values(?,?,?)",
+                                                   (STid, STname, "0+1")):
+                                        print("Added-")
+                                        print("Name:", STname)
+                                        print("Phone No.-", STid)
+                                        err = False
+                                        con.commit()
+                                except Exception as e:
+                                    err = False
+
+                elif workdateint + 2 == dateint:  # Day 3
+                    day = "Day 3"
+                    print(day)
+                    cur = con.cursor()
+                    with con:
+                        x = cur.execute("SELECT atten,id FROM Attend")
+                        rows = cur.fetchall()
+                        for i in rows:
+                            newst = i[0][0:3] + "+0"
+                            sql = "update attend set atten=? where atten=? "
+                            up = newst, i[0]
+                            if len(i[0]) == 3:
+                                if cur.execute(sql, up):
+                                    print("Database Updated")
+                    con.commit()
+                    err = True
+                    while err:
+                        with con:
+                            x = cur.execute("SELECT atten,id FROM Attend")
+                            rows = cur.fetchall()
+                            for i in rows:
+                                if i[1] == STid:
+                                    try:
+                                        newst = i[0][0:3] + "+1"
+                                        sql = "update attend set atten=? where id=? "
+                                        up = newst, STid
+                                        if cur.execute(sql, up):
+                                            print("Updated-")
+                                            print("Name:", STname)
+                                            print("Phone No.-", STid)
+                                            con.commit()
+                                            err = False
+                                    except Exception as e:
+                                        err = False
+                                else:
+                                    try:
+                                        if cur.execute("INSERT INTO Attend(Id, Name, atten) values(?,?,?)",
+                                                       (STid, STname, "0+0+1")):
+                                            print("Added-")
+                                            print("Name:", STname)
+                                            print("Phone No.-", STid)
+                                            err = False
+                                            con.commit()
+                                    except Exception as e:
+                                        err = False
+
+                elif workdateint + 3 == dateint:  # Day 4
+                    day = "Day 4"
+                    print(day)
+                    cur = con.cursor()
+                    with con:
+                        x = cur.execute("SELECT atten,id FROM Attend")
+                        rows = cur.fetchall()
+                        for i in rows:
+                            newst = i[0][0:5] + "+0"
+                            sql = "update attend set atten=? where atten=? "
+                            up = newst, i[0]
+                            if len(i[0]) == 5:
+                                if cur.execute(sql, up):
+                                    print("Database Updated")
+                    con.commit()
+                    err = True
+                    while err:
+                        with con:
+                            x = cur.execute("SELECT atten,id FROM Attend")
+                            rows = cur.fetchall()
+                            for i in rows:
+                                if i[1] == STid:
+                                    try:
+                                        newst = i[0][0:5] + "+1"
+                                        sql = "update attend set atten=? where id=? "
+                                        up = newst, STid
+                                        if cur.execute(sql, up):
+                                            print("Updated-")
+                                            print("Name:", STname)
+                                            print("Phone No.-", STid)
+                                            con.commit()
+                                            err = False
+                                    except Exception as e:
+                                        print(e)
+                                        err = False
+                                else:
+                                    try:
+                                        if cur.execute("INSERT INTO Attend(Id, Name, atten) values(?,?,?)",
+                                                       (STid, STname, "0+0+0+1")):
+                                            print("Added-")
+                                            print("Name:", STname)
+                                            print("Phone No.-", STid)
+                                            err = False
+                                            con.commit()
+                                    except Exception as e:
+                                        err = False
+
+                elif workdateint + 4 == dateint:  # Day 5
+                    day = "Day 5"
+                    print(day)
+                    cur = con.cursor()
+                    with con:
+                        x = cur.execute("SELECT atten,id FROM Attend")
+                        rows = cur.fetchall()
+                        for i in rows:
+                            newst = i[0][0:7] + "+0"
+                            sql = "update attend set atten=? where atten=? "
+                            up = newst, i[0]
+                            if len(i[0]) == 7:
+                                if cur.execute(sql, up):
+                                    print("Databse Updated")
+                    con.commit()
+                    err = True
+                    while err:
+                        with con:
+                            x = cur.execute("SELECT atten,id FROM Attend")
+                            rows = cur.fetchall()
+                            for i in rows:
+                                if i[1] == STid:
+                                    try:
+                                        newst = i[0][0:7] + "+1"
+                                        sql = "update attend set atten=? where id=? "
+                                        up = newst, STid
+                                        if cur.execute(sql, up):
+                                            print("Updated-")
+                                            print("Name:", STname)
+                                            print("Phone No.-", STid)
+                                            err = False
+                                            con.commit()
+                                            err = False
+                                    except Exception as e:
+                                        err = False
+                                else:
+                                    try:
+                                        if cur.execute("INSERT INTO Attend(Id, Name, atten) values(?,?,?)",
+                                                       (STid, STname, "0+0+0+0+1")):
+                                            print("Added-")
+                                            print("Name:", STname)
+                                            print("Phone No.-", STid)
+                                            err = False
+                                            con.commit()
+                                    except Exception as e:
+                                        err = False
+
+
+        root = Tk()
+        if workdateint == dateint:
+            root.title("Attendance Day 1")
+        elif workdateint + 1 == dateint:
+            root.title("Attendance Day 2")
+        elif workdateint + 2 == dateint:
+            root.title("Attendance Day 3")
+        elif workdateint + 3 == dateint:
+            root.title("Attendance Day 4")
+        elif workdateint + 4 == dateint:
+            root.title("Attendance Day 5")
+        root.geometry("400x200")
+        app = App(root)
+        root.mainloop()
+
+    elif choice == "2":
+        x = cur.execute("SELECT * FROM Attend")
+        rows = cur.fetchall()
+        for row in rows:
+            print(row)
+
+    elif choice == "4":
+        import sqlite3
+        from xlsxwriter.workbook import Workbook
+
+        workbook = Workbook('ACM Attendance.xlsx')
+        worksheet = workbook.add_worksheet()
+
+        conn = sqlite3.connect('ACM.db')
+        c = conn.cursor()
+        c.execute("select * from Attend")
+        mysel = c.execute("select * from Attend ")
+        for i, row in enumerate(mysel):
+            for j, value in enumerate(row):
+                worksheet.write(i, j, value)
+        workbook.close()
+
+    elif choice == "5":
+        fromaddr = "cyberbot1502@gmail.com"
+        toaddr = "acmditu@gmail.com"
+        msg = MIMEMultipart()
+        msg['From'] = fromaddr
+        msg['To'] = toaddr
+        msg['Subject'] = 'Attendence sheet'
+        body = "ACM event"
+        msg.attach(MIMEText(body, 'plain'))
+        filename = "output2.xlsx"
+        attachment = open("output2.xlsx", "rb")
+        p = MIMEBase('application', 'octet-stream')
+        p.set_payload((attachment).read())
+        encoders.encode_base64(p)
+        p.add_header('Content-Disposition', "attachment;filename=%s" % filename)
+        msg.attach(p)
+        s = smtplib.SMTP('smtp.gmail.com', 587)
+        s.starttls()
+        s.login(fromaddr, "Hexadecimalqwertyuiop")
+        text = msg.as_string()
+        s.sendmail(fromaddr, toaddr, text)
+        s.quit()
+        print("Mail Sent Successfully to:", toaddr)

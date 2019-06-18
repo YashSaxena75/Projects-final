@@ -1,0 +1,51 @@
+import pyttsx3
+engine=pyttsx3.init()
+voices=engine.getProperty('voices')
+rate = engine.setProperty('rate',170)   # getting details of current speaking rate
+engine.setProperty('voice',voices[1].id)
+volume = engine.setProperty('volume',10.0)   #getting to know current volume level (min=0 and max=1)
+
+def speak(audio):
+    engine.say(audio)
+    engine.runAndWait()
+
+
+print("ACM DITU STUDENT CHAPTER SPEECH RECOGNITION SYSTEM")
+print("\n\n\n\n\n")
+import speech_recognition as sr
+
+text = None
+def run():
+    while text != 'done':
+        r = sr.Recognizer()
+        with sr.Microphone() as source:
+            print("Say something!")
+            audio = r.listen(source)
+            print("Say Again to confirm")
+            ad = r.listen(source)
+
+            try:
+                text = r.recognize_google(audio)
+                te = r.recognize_google(ad)
+                print("You said : {}".format(text))
+            except:
+                print("Sorry could not recognize your voice")
+                return "None"
+
+        c=0
+        text = text.replace(' ', '')
+        f = open(r"name.txt")
+        for line in f:
+            line.strip().split('/n')
+            c = c + 1
+            if text in line:
+                print("Present!")
+                h = open(r"att.txt", "a")
+                h.write('\n')
+                h.write(text + " Present ")
+                speak(te)
+                break
+run()
+
+
+

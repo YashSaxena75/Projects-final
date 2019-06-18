@@ -1,0 +1,260 @@
+import requests
+from urllib.request import urlopen
+import json
+import os,datetime
+import speech_recognition
+import playsound
+import tkinter as tk
+from tkinter import ttk, messagebox
+import pymsgbox,sys
+from tkinter.ttk import *
+from tkinter import *
+import pyttsx3
+import wikipedia as wikipedia
+import webbrowser
+
+engine=pyttsx3.init()
+voices=engine.getProperty('voices')
+rate = engine.setProperty('rate',170)   # getting details of current speaking rate
+engine.setProperty('voice',voices[1].id)
+volume = engine.setProperty('volume',10.0)   #getting to know current volume level (min=0 and max=1)
+
+def speak(audio):
+    engine.say(audio)
+    engine.runAndWait()
+
+def voice():
+    language=''
+
+    try:
+        url='https://www.google.com'
+        urlopen(url)
+        st='connected'
+    except Exception as e:
+        print(e)
+    h=['hi','hello','hey','namaste','yo']
+    m=['list music','list songs','music','songs','play music']
+    l = ['what is my location', 'my location', 'where am i', 'what is IP', 'what is my country name']
+
+    hiddenmodule=['geocoder','gTTS','pyaudio','speech_recognition','requests','playsound']
+    text = ''
+    n=0
+    while text != 'done':
+        n=n+1
+        r = speech_recognition.Recognizer()
+        with speech_recognition.Microphone() as source:
+            print("Say something!")
+            r.adjust_for_ambient_noise(source)
+            audio = r.listen(source)
+            try:
+                text = r.recognize_google(audio)
+                print("You said", text)
+
+            except:
+
+                print("Sorry could not recognize your voice")
+                text='continue'
+                return "None"
+
+            if text in h:
+                hr = int(datetime.datetime.now().hour)
+                language = 'en'
+                if hr >= 0 and hr < 12:
+                    speak('good morning')
+                elif hr >= 12 and hr <= 18:
+                    speak('good afternoon')
+                else:
+                    speak('good evening')
+
+
+
+            elif 'open a file' in text:
+                speak("I can Open a file for you just enter the path here")
+                path = input("Path to open a file!")
+
+                f = open(path)
+                print("\n\n\n")
+                print(f.read())
+                text = 'continue'
+
+
+            elif text in m:
+                list=[]
+                print("--------------List of Songs----------------\n\n")
+                for name in os.listdir(r'C:\Users\hum4no!d_h473r\Downloads'):
+                    if name.endswith('.mp3'):
+                        list.append(name)
+                print(*list,sep="\n")
+                k=int(input("Play Song:"))
+                path=r'C:\Users\hum4no!d_h473r\Downloads'
+                l=path+"\\"+list[k]
+                print(l)
+                os.startfile(l)
+                text = 'continue'
+
+            elif text in l:
+                if st=='connected':
+                    send_url = "http://api.ipstack.com/check?access_key=6723a2efbdc8a6fc6d662f99ee020a7e"
+                    geo_req = requests.get(send_url)
+                    geo_json = json.loads(geo_req.text)
+                    latitude = geo_json['latitude']
+                    longitude = geo_json['longitude']
+                    speak(geo_json['country_name'])
+                    language='en'
+                    m=geo_json['ip']
+                    print('IP:',m)
+                else:
+                    speak('can not connect to the internet')
+                    language='en'
+
+
+            elif 'calculator' in text:
+                speak('Opening calculator,hang on')
+                os.system('C:\Windows\System32\calc.exe')
+                text = 'continue'
+
+
+
+            elif 'what is my name' in text:
+                if os.path.exists(r'C:/Arb/name.txt'):
+                    f=open(r'C:/Arb/name.txt','r')
+                    speak('your name is')
+                    speak(f.read())
+
+                else:
+                    speak('I do not know ur name')
+                    language='en'
+                    f=open(r'C:/Arb/name.txt','w+')
+                    na=input('your name:')
+                    f.write(na)
+                    f.close()
+                text = 'continue'
+
+            elif 'zero divided by zero' in text:
+                language='en'
+                te='it gives a result same as your girl friend name that is not defined'
+
+            elif 'I am drunk' in text:
+                language='fr'
+                print('Ok you want me to drink......')
+                te='ok you want me to drink'
+
+            elif 'spell' in text:
+                s=input('what to spell:')
+                language='en'
+                speak(s)
+
+
+            elif 'search' in text:
+                lib = input("Enter what you want to search for:")
+                speak('searching for')
+                speak(lib)
+                ur = "https://www.google.co.in/search?q="
+                webbrowser.open(ur + lib)
+
+
+            elif 'power down' in text:
+                speak('Sure Sir')
+
+            elif 'Wikipedia' in text:
+                query=input("To search:")
+                speak('Searching on wikipedia....')
+                query=query.replace('wikipedia','')
+                res=wikipedia.summary(query,sentences=4)
+                speak('According to wikipedia')
+                print(res)
+                speak(res)
+                te='thanks'
+
+            elif 'open Google' in text:
+                speak('opening google')
+                webbrowser.open('google.com')
+
+            elif 'YouTube' in text:
+                speak('opening youtube,just wait')
+                webbrowser.open('youtube.com')
+
+            else:
+                speak('my maker is working on it try something different sir')
+
+
+
+
+speak('Hey,I am cirapie your virtual assistant')
+
+speak('In order to use me you have to register')
+
+def stop():
+    speak('Thanks for using me')
+    sys.exit(0)
+
+win = tk.Tk()
+
+if not os.path.exists('hey.txt'):
+    import random
+    x = ''.join(random.choice('0123456789ABCDEFGJKLMOPQR') for i in range(5))
+    y = ''.join(random.choice('0123456789ABCDGSTUVWXYZ') for i in range(5))
+    z = ''.join(random.choice('0123GHIJKLMOPQRSTUVWXYZ') for i in range(5))
+    a = ''.join(random.choice('012ABEFGHIJKLMOPQRSTUVWXYZ') for i in range(5))
+    b = ''.join(random.choice('0123456789CDEFGHSTUVWXYZ') for i in range(5))
+    d = x + "-" + y + "-" + z + "-" + a + "-" + b
+    lbl = ttk.Label(win, text=d).grid(column=0, row=0)
+    key=d
+
+
+
+win.geometry('600x300')
+master=tk.Tk()
+win.title("Assistant Activation key")
+lbl = ttk.Label(win, text = "Activation Key:").grid(column =0 , row = 5)
+
+
+def quit():
+    win.destroy()
+
+
+if not os.path.exists('hey.txt'):
+    def click():
+
+        x=name.get()
+        if len(x)>29 or x!=key:
+            pymsgbox.alert("Error in key!")
+            b = Button(master, text="Start Assistant", command=voice)
+            b.grid(row=0, column=3, padx=50)
+            c = Button(master, text="Stop Assistant",command=stop)
+            c.grid(row=1, column=3, pady=10, padx=50)
+            b.config()
+            c.config()
+            master.mainloop()
+
+        else:
+            pymsgbox.alert("Your Assistant is Activated")
+            master.geometry('300x300')
+            f=open('hey.txt','w+')
+            f.write(key)
+            b = Button(master, text="Start Assistant",command=voice)
+            b.grid(row=0, column=3, padx=50)
+            c = Button(master, text="Stop Assistant",command=stop)
+            c.grid(row=1, column=3, pady=10, padx=50)
+            b.config()
+            c.config()
+            quit()
+            master.mainloop()
+
+
+    name = tk.StringVar()
+    nameEntered = ttk.Entry(win, width = 35, textvariable = name).grid(column = 5, row = 5,pady=50,padx=50)
+    button = ttk.Button(win, text = "Next", command = click).grid(column = 5, row = 10,pady=50,padx=50)
+
+    win.mainloop()
+
+else:
+    quit()
+    pymsgbox.alert("Done","You are already registered!")
+    b = Button(master, text="Start Assistant", command=voice)
+    b.grid(row=0, column=3, padx=50)
+    c = Button(master, text="Stop Assistant",command=stop)
+    c.grid(row=1, column=3, pady=10, padx=50)
+    b.config()
+    c.config()
+    master.mainloop()

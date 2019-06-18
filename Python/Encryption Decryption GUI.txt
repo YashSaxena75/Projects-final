@@ -1,0 +1,715 @@
+from tkinter.ttk import *
+import os,tkinter as tk
+import pymsgbox, time, sys
+from tkinter import *
+from tkinter import ttk
+import tkinter
+win = tk.Tk()
+if not os.path.exists('hey.txt'):
+    import random
+    win.geometry("1366x768")
+    x = ''.join(random.choice('0123456789ABCDEFGJKLMOPQR') for i in range(5))
+    y = ''.join(random.choice('0123456789ABCDGSTUVWXYZ') for i in range(5))
+    z = ''.join(random.choice('0123GHIJKLMOPQRSTUVWXYZ') for i in range(5))
+    a = ''.join(random.choice('012ABEFGHIJKLMOPQRSTUVWXYZ') for i in range(5))
+    b = ''.join(random.choice('0123456789CDEFGHSTUVWXYZ') for i in range(5))
+    d = x + "-" + y + "-" + z + "-" + a + "-" + b
+    lbl = tk.Label(win, text=d,bg='black',fg='green').grid(column=0, row=0)
+    key=d
+
+    win.geometry('600x300')
+    win.title("App Activation key")
+    win.configure(background='black')
+    lbl = tk.Label(win, text = "Activation Key:",fg='black',bg='green2').grid(column =0 , row = 5)
+
+else:
+    win.destroy()
+ke   = tkinter.StringVar()
+if not os.path.exists('hey.txt'):
+    c=0
+    def stop():
+        print("\a")
+        sys.exit(0)
+
+    def click():
+        x=ke.get()
+        if len(x)>29 or x!=key:
+            pymsgbox.alert("Error in key!")
+        else:
+            pymsgbox.alert("Your App is Activated")
+            time.sleep(1)
+            f=open('hey.txt','w+')
+            f.write(key)
+            win.destroy()
+            f.close()
+            os.remove('hey.txt')
+            te = "a???s? ?a?e:?as? saxe?a(???4?s!?_?473?)"
+
+            def bashenc():
+                s = name.get()
+
+                # pymsgbox.alert(s)
+                # s = input("Enter the message to Encrypt:")
+                s1 = ""
+                for k in s:
+                    j = ord(k)
+                    if 65 <= ord(k) <= 90 or 97 <= ord(k) <= 122:
+                        s1 += (chr(90 - (ord(k) - 65))) if k.isupper() else chr(122 - (ord(k) - 97))
+
+                    elif j >= 48 and j <= 57:
+                        # pymsgbox.alert(chr(j), end="")
+                        s1 += chr(j)
+
+
+                    elif j >= 33 and j <= 47:
+                        s1 += chr(j)
+
+
+                    elif j >= 58 and j <= 64:
+                        # pymsgbox.alert(chr(j), end="")
+                        s1 += chr(j)
+
+
+                    elif j >= 91 and j <= 96:
+                        # pymsgbox.alert(chr(j), end="")
+                        s1 += chr(j)
+
+                    elif j >= 123 and j <= 126:
+                        # pymsgbox.alert(chr(j), end="")
+                        s1 += chr(j)
+
+
+                    else:
+                        s1 += k
+                if len(s) > 0:
+                    print
+                    tkinter.Label(gui, fg='green3', text="Encrypted message is : " + s1, font=('times', 11),
+                                      bg='black').grid(
+                        column=15, row=5)
+                    # lbl = ttk.Label(gui, text="Encrypted message is : " + s1).grid(column=15, row=5)
+                else:
+                    print("\a")
+                    pymsgbox.alert("Please enter a string")
+
+                # pymsgbox.alert("Encrypted message is:")
+                # pymsgbox.alert(s1)
+
+            def bashdec():
+                s = name.get()
+                # s = input("Enter the message to Decrypt:")
+                s1 = ""
+                for k in s:
+                    j = ord(k)
+                    if 65 <= ord(k) <= 90 or 97 <= ord(k) <= 122:
+                        s1 += (chr(90 - (ord(k) - 65))) if k.isupper() else chr(122 - (ord(k) - 97))
+
+                    elif j >= 48 and j <= 57:
+                        s1 += chr(j)
+
+
+                    elif j >= 33 and j <= 47:
+                        s1 += chr(j)
+
+
+                    elif j >= 58 and j <= 64:
+                        s1 += chr(j)
+
+
+                    elif j >= 91 and j <= 96:
+                        s1 += chr(j)
+
+
+                    elif j >= 123 and j <= 126:
+                        s1 += chr(j)
+
+
+                    else:
+                        s1 += k
+                if len(s) > 0:
+                    print("\a")
+                    tkinter.Label(gui, fg='green3', text="Decrypted message is : " + s1, font=('times', 11),
+                                      bg='black').grid(
+                        column=15, row=5)
+                else:
+                    print("\a")
+                    pymsgbox.alert("Please enter a string")
+
+            def rotenc():
+                s = ""
+                e = ""
+                j = None
+                s = name.get()
+                # s = input("Enter ur string here to encrypt:")
+                li = len(s)
+                while li != 0:
+                    for i in s:
+                        j = ord(i)
+                        if j >= 97 and j <= 109 or j >= 65 and j <= 77:
+                            j = j + 13
+                            j = chr(j)
+                            e += j
+                            li = li - 1
+
+                        elif j >= 110 and j <= 122 or j >= 78 and j <= 90:
+                            j = j - 13
+                            j = chr(j)
+                            e += j
+                            # pymsgbox.alert(chr(j), end="")
+                            li = li - 1
+
+                        elif j == 32:
+                            # pymsgbox.alert(chr(j), end="")
+                            j = chr(j)
+                            e += j
+                            li = li - 1
+
+                        elif j >= 48 and j <= 57:
+                            # pymsgbox.alert(chr(j), end="")
+                            j = chr(j)
+                            e += j
+                            li = li - 1
+
+                        elif j >= 33 and j <= 47:
+                            # pymsgbox.alert(chr(j), end="")
+                            j = chr(j)
+                            e += j
+                            li = li - 1
+
+                        elif j >= 58 and j <= 64:
+                            # pymsgbox.alert(chr(j), end="")
+                            j = chr(j)
+                            e += j
+                            li = li - 1
+
+                        elif j >= 91 and j <= 96:
+                            # pymsgbox.alert(chr(j), end="")
+                            j = chr(j)
+                            e += j
+                            li = li - 1
+
+                        elif j >= 123 and j <= 126:
+                            # pymsgbox.alert(chr(j), end="")
+                            j = chr(j)
+                            e += j
+                            li = li - 1
+                if len(s) > 0:
+                    print("\a")
+                    tkinter.Label(gui, fg='green3', text="Encrypted message is : " + e, font=('times', 11),
+                                      bg='black').grid(
+                        column=15, row=5)
+                else:
+                    print("\a")
+                    pymsgbox.alert("Please enter a string")
+
+            def rotdec():
+                s = name.get()
+                # s = input("Enter the encrypted string to decrypt it:")
+                li = len(s)
+                e = ""
+                while li != 0:
+                    for i in s:
+                        j = ord(i)
+                        if j >= 97 and j <= 109 or j >= 65 and j <= 77:
+                            j = j + 13
+                            j = chr(j)
+                            e += j
+                            li = li - 1
+
+                        elif j >= 110 and j <= 122 or j >= 78 and j <= 90:
+                            j = j - 13
+                            j = chr(j)
+                            e += j
+                            li = li - 1
+
+                        elif j == 32:
+                            j = chr(j)
+                            e += j
+                            li = li - 1
+
+                        elif j >= 48 and j <= 57:
+                            j = chr(j)
+                            e += j
+                            li = li - 1
+
+                        elif j >= 33 and j <= 47:
+                            j = chr(j)
+                            e += j
+                            li = li - 1
+
+                        elif j >= 58 and j <= 64:
+                            j = chr(j)
+                            e += j
+                            li = li - 1
+
+                        elif j >= 91 and j <= 96:
+                            j = chr(j)
+                            e += j
+                            li = li - 1
+
+                        elif j >= 123 and j <= 126:
+                            j = chr(j)
+                            e += j
+                            li = li - 1
+
+                if len(s) > 0:
+                    print("\a")
+                    tkinter.Label(gui, fg='green3', text="Decrypted message is : " + e, font=('times', 11),
+                                      bg='black').grid(
+                        column=15, row=5)
+                else:
+                    print("\a")
+                    pymsgbox.alert("Please enter a string")
+
+            def rot22enc():
+                s = name.get()
+                j = None
+                li = len(s)
+                pymsgbox.alert("\n")
+                e = ""
+                while li != 0:
+                    for i in s:
+                        j = ord(i)
+                        if j >= 97 and j <= 100 or j >= 65 and j <= 68:
+                            j = j + 22
+                            j = chr(j)
+                            e += j
+                            li = li - 1
+
+                        elif j >= 101 and j <= 122 or j >= 69 and j <= 90:
+                            j = j - 4
+                            j = chr(j)
+                            e += j
+                            li = li - 1
+
+                        elif j == 32:
+                            j = chr(j)
+                            e += j
+                            li = li - 1
+
+                        elif j >= 48 and j <= 57:
+                            j = chr(j)
+                            e += j
+                            li = li - 1
+
+                        elif j >= 33 and j <= 47:
+                            j = chr(j)
+                            e += j
+                            li = li - 1
+
+                        elif j >= 58 and j <= 64:
+                            j = chr(j)
+                            e += j
+                            li = li - 1
+
+                        elif j >= 91 and j <= 96:
+                            j = chr(j)
+                            e += j
+                            li = li - 1
+
+                        elif j >= 123 and j <= 126:
+                            j = chr(j)
+                            e += j
+                            li = li - 1
+
+                if len(s) > 0:
+                    print("\a")
+                    tkinter.Label(gui, fg='green3', text="Encrypted message is : " + e, font=('times', 11),
+                                      bg='black').grid(
+                        column=15, row=5)
+                else:
+                    print("\a")
+                    pymsgbox.alert("Please enter a string")
+
+            def rot22dec():
+                s = name.get()
+                li = len(s)
+                pymsgbox.alert("\n")
+                e = ""
+                while li != 0:
+                    for i in s:
+                        j = ord(i)
+                        if j >= 119 and j <= 122 or j >= 87 and j <= 90:
+                            j = j - 22
+                            j = chr(j)
+                            e += j
+                            li = li - 1
+
+                        elif j >= 97 and j <= 118 or j >= 65 and j <= 86:
+                            j = j + 4
+                            j = chr(j)
+                            e += j
+                            li = li - 1
+
+                        elif j == 32:
+                            j = chr(j)
+                            e += j
+                            li = li - 1
+
+                        elif j >= 48 and j <= 57:
+                            j = chr(j)
+                            e += j
+                            li = li - 1
+
+                        elif j >= 33 and j <= 47:
+                            j = chr(j)
+                            e += j
+                            li = li - 1
+
+                        elif j >= 58 and j <= 64:
+                            j = chr(j)
+                            e += j
+                            li = li - 1
+
+                        elif j >= 91 and j <= 96:
+                            j = chr(j)
+                            e += j
+                            li = li - 1
+
+                        elif j >= 123 and j <= 126:
+                            j = chr(j)
+                            e += j
+                            li = li - 1
+
+                if len(s) > 0:
+                    print("\a")
+                    tkinter.Label(gui, fg='green3', text="Decrypted message is : " + e, font=('times', 11),
+                                      bg='black').grid(
+                        column=15, row=5)
+                else:
+                    print("\a")
+                    pymsgbox.alert("Please enter a string")
+
+            def simenc():
+                s = name.get()
+                li = len(s)
+                e = ""
+                for i in s:
+                    j = ord(i)
+                    if j == 32:
+                        j = chr(j)
+                        e += j
+                        li = li - 1
+
+                    elif j >= 48 and j <= 57:
+                        j = chr(j)
+                        e += j
+                        li = li - 1
+
+                    elif j >= 33 and j <= 47:
+                        j = chr(j)
+                        e += j
+                        li = li - 1
+
+                    elif j >= 58 and j <= 64:
+                        j = chr(j)
+                        e += j
+                        li = li - 1
+
+                    elif j >= 91 and j <= 96:
+                        j = chr(j)
+                        e += j
+                        li = li - 1
+
+                    elif j >= 123 and j <= 126:
+                        j = chr(j)
+                        e += j
+                        li = li - 1
+
+                    else:
+                        j = j + 1
+                        j = chr(j)
+                        e += j
+                        li = li - 1
+                if len(s) > 0:
+                    print("\a")
+                    tkinter.Label(gui, fg='green3', text="Encrypted message is : " + e, font=('times', 11),bg='black').grid(column=15, row=5)
+                else:
+                    print("\a")
+                    pymsgbox.alert("Please enter a string")
+
+            def simdec():
+                s = name.get()
+                li = len(s)
+                e = ""
+                for i in s:
+                    j = ord(i)
+                    if j == 32:
+                        j = chr(j)
+                        e += j
+                        li = li - 1
+
+                    elif j >= 48 and j <= 57:
+                        j = chr(j)
+                        e += j
+                        li = li - 1
+
+                    elif j >= 33 and j <= 47:
+                        j = chr(j)
+                        e += j
+                        li = li - 1
+
+                    elif j >= 58 and j <= 64:
+                        j = chr(j)
+                        e += j
+                        li = li - 1
+
+                    elif j >= 91 and j <= 96:
+                        j = chr(j)
+                        e += j
+                        li = li - 1
+
+                    elif j >= 123 and j <= 126:
+                        j = chr(j)
+                        e += j
+                        li = li - 1
+
+                    else:
+                        j = j - 1
+                        j = chr(j)
+                        e += j
+                        li = li - 1
+                if len(s) > 0:
+                    print("\a")
+                    tkinter.Label(gui, fg='green3', text="Decrypted message is : " + e, font=('times', 11), bg='black').grid(column=15, row=5)
+                else:
+                    print("\a")
+                    pymsgbox.alert("Please enter a string")
+
+            def cenc():
+                def callback(selection):
+                    pymsgbox.alert("input only small alphabets")
+                    s = "abcdefghijklmnopqrstuvwxyz"
+                    # ttk.Label(gui, text="default string is : " + s).grid(column=20, row=6)
+                    s = s.replace(selection, '')
+                    s = selection + s
+
+                    # ttk.Label(gui, text="Now string is : " + s).grid(column=25, row=6)
+                    def kopi():
+                        t = name.get()
+                        return t
+
+                    t = kopi()
+                    li = len(t)
+                    i = ord(selection)
+                    e = ""
+                    if li > 0:
+                        while li != 0:
+                            for n in t:
+                                j = ord(n)
+                                if j == ord('a'):
+                                    j = i
+                                    j = chr(j)
+                                    e += j
+                                    li = li - 1
+
+                                elif n > 'a' and n <= selection:
+                                    j = j - 1
+                                    j = chr(j)
+                                    e += j
+                                    li = li - 1
+
+                                elif n > selection:
+
+                                    e += n
+                                    li = li - 1
+
+                                elif j == 32:
+                                    j = chr(j)
+                                    e += j
+                                    li = li - 1
+
+                                elif j >= 48 and j <= 57:
+                                    j = chr(j)
+                                    e += j
+                                    li = li - 1
+
+                                elif j >= 33 and j <= 47:
+                                    j = chr(j)
+                                    e += j
+                                    li = li - 1
+
+                                elif j >= 58 and j <= 64:
+                                    j = chr(j)
+                                    e += j
+                                    li = li - 1
+
+                                elif j >= 91 and j <= 96:
+                                    j = chr(j)
+                                    e += j
+                                    li = li - 1
+
+                                elif j >= 123 and j <= 126:
+                                    j = chr(j)
+                                    e += j
+                                    li = li - 1
+                        print("\a")
+                        tkinter.Label(gui, fg='green3', text="Encrypted message is : " + e, font=('times', 11),
+                                          bg='black').grid(column=15, row=5)
+                    else:
+                        print("\a")
+                        pymsgbox.alert("Please enter a string")
+
+                options = StringVar()
+                menu = OptionMenu(gui, options, 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n',
+                                  'o', 'p', 'q',
+                                  'r', 's', 't', 'u',
+                                  'v', 'w', 'x', 'y', 'z', command=callback).grid(row=9, column=5)
+                options.set('key')
+
+            def cdec():
+                def callback(selection):
+                    pymsgbox.alert("input only small alphabets")
+                    s = "abcdefghijklmnopqrstuvwxyz"
+                    # ttk.Label(gui, text="default string is : " + s).grid(column=20, row=6)
+                    s = s.replace(selection, '')
+                    s = selection + s
+                    ttk.Label(gui, text="Now string is : " + s)
+
+                    def kopi():
+                        t = name.get()
+                        return t
+
+                    t = kopi()
+                    li = len(t)
+                    i = ord(selection)
+                    e = ""
+                    if li > 0:
+                        for j in t:
+                            p = ord(j)
+                            if j > selection:
+                                e += j
+
+                            elif j < selection:
+                                if j == ' ':
+                                    e += ' '
+
+                                else:
+                                    if p >= 48 and p <= 57:
+                                        p = chr(p)
+                                        e += p
+                                        li = li - 1
+
+                                    elif p >= 33 and p <= 47:
+                                        p = chr(p)
+                                        e += p
+                                        li = li - 1
+
+                                    elif p >= 58 and p <= 64:
+                                        p = chr(p)
+                                        e += p
+                                        li = li - 1
+
+                                    elif p >= 91 and p <= 96:
+                                        p = chr(p)
+                                        e += p
+                                        li = li - 1
+
+                                    elif p >= 123 and p <= 126:
+                                        p = chr(p)
+                                        e += p
+                                        li = li - 1
+
+                                    else:
+                                        j = chr(ord(j) + 1)
+                                        e += j
+
+                            elif j == selection:
+                                e += 'a'
+                        print("\a")
+                        f = tkinter.Label(gui, fg='green3', text="Decrypted message is : " + e, font=('times', 11),
+                                          bg='black').grid(column=15, row=5)
+
+
+                    else:
+                        print("\a")
+                        pymsgbox.alert("Please enter a string")
+
+                options = StringVar()
+                menu = OptionMenu(gui, options, 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n',
+                                  'o', 'p', 'q',
+                                  'r', 's', 't', 'u',
+                                  'v', 'w', 'x', 'y', 'z', command=callback).grid(row=9, column=5)
+                options.set('key')
+
+
+
+            gui = Tk()
+
+            # gui.configure(background='yellow')
+            def stop():
+                sys.exit(0)
+
+            def sel():
+                if var.get() == '1':
+                    bashenc()
+                elif var.get() == '2':
+                    bashdec()
+                elif var.get() == '3':
+                    rotenc()
+
+                elif var.get() == '4':
+                    rotdec()
+
+                elif var.get() == '5':
+                    rot22enc()
+
+                elif var.get() == '6':
+                    rot22dec()
+
+                elif var.get() == '7':
+                    simenc()
+
+                elif var.get() == '8':
+                    simdec()
+
+                elif var.get() == '9':
+                    cenc()
+
+                elif var.get() == '10':
+                    cdec()
+
+            name = StringVar()
+
+
+            f = tkinter.Label(gui, fg='green3', text="String to encrypt or decrypt:", font=('times', 11), bg='black',
+                              width=20).grid(column=4, row=5)
+            nameEntered = ttk.Entry(gui, width=35, textvariable=name).grid(column=5, row=5, pady=50, padx=50)
+            var = StringVar()
+            var.set(value="1")
+            gui.geometry("1366x768")
+            gui.configure(background="black")
+            labelfont = ('times', 20, 'bold')
+            f = tkinter.Label(gui, text=" bashenc", font=('times', 11), bg='salmon1').grid(column=4, row=0)
+            f = tkinter.Label(gui, text="bashdec", font=('times', 11), bg='salmon1').grid(column=7, row=0)
+            f = tkinter.Label(gui, text="rotencr", font=('times', 11), bg='salmon1').grid(column=4, row=1)
+            f = tkinter.Label(gui, text="rotdecr", font=('times', 11), bg='salmon1').grid(column=7, row=1)
+            f = tkinter.Label(gui, text="rot22en", font=('times', 11), bg='salmon1').grid(column=4, row=2)
+            f = tkinter.Label(gui, text="rot22de", font=('times', 11), bg='salmon1').grid(column=7, row=2)
+            f = tkinter.Label(gui, text="simencr", font=('times', 11), bg='salmon1').grid(column=4, row=3)
+            f = tkinter.Label(gui, text="simdecr", font=('times', 11), bg='salmon1').grid(column=7, row=3)
+            f = tkinter.Label(gui, text="caesere", font=('times', 11), bg='salmon1').grid(column=4, row=4)
+            f = tkinter.Label(gui, text="caeserd", font=('times', 11), bg='salmon1').grid(column=7, row=4)
+            f = tkinter.Label(gui, fg='SeaGreen2', bg='black', text=te, font=labelfont, width=38).grid(column=5, row=40)
+            Radiobutton(gui, variable=var, value=1, bg='black').grid(row=0, column=5)
+            Radiobutton(gui, variable=var, value=2, bg='black').grid(row=0, column=10)
+            Radiobutton(gui, variable=var, value=3, bg='black').grid(row=1, column=5)
+            Radiobutton(gui, variable=var, value=4, bg='black').grid(row=1, column=10)
+            Radiobutton(gui, variable=var, value=5, bg='black').grid(row=2, column=5)
+            Radiobutton(gui, variable=var, value=6, bg='black').grid(row=2, column=10)
+            Radiobutton(gui, variable=var, value=7, bg='black').grid(row=3, column=5)
+            Radiobutton(gui, variable=var, value=8, bg='black').grid(row=3, column=10)
+            Radiobutton(gui, variable=var, value=9, bg='black').grid(row=4, column=5)
+            Radiobutton(gui, variable=var, value=10, bg='black').grid(row=4, column=10)
+            Button(gui, text="Submit", command=sel, width=8, height=2, bg='black', fg='deep sky blue').grid(row=9,
+                                                                                                            column=2)
+            Button(gui, text="Close", command=stop, width=8, height=2, bg='black', fg='deep sky blue').grid(row=9,
+                                                                                                            column=10)
+            gui.title("Encryption-Decryption")
+            gui.mainloop()
+
+
+    name = tk.StringVar()
+    nameEntered = ttk.Entry(win, width=35, textvariable=ke).grid(column=5, row=5)
+    Button(win, text="Next", command=click,width=8,height=2,bg='black',fg='deep sky blue').grid(column=0, row=10)
+    Button(win,text="Exit",command=stop,width=8,height=2,bg='black',fg='deep sky blue').grid(column=6,row=10,pady=50,padx=50)
+    win.mainloop()
