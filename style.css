@@ -1,0 +1,129 @@
+body {
+  background: #34495e;
+  font: normal 300 18px "Roboto", sans-serif;
+}
+ 
+#menu-nav {
+  align:center;
+  max-width: 10000px;
+  margin: 20px auto;
+  background-color: #ecf0f1;
+  border-radius: 4px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+ 
+#navigation-bar ul {
+  border-radius: 4px;
+  overflow: hidden;
+}
+#navigation-bar li {
+  float: left;
+  width: 20%;
+}
+#navigation-bar li:hover a::before {
+  right: 0;
+  left: 0;
+}
+#navigation-bar a {
+  color: #848484;
+  font-size: 20px;
+  text-decoration: none;
+  text-align: center;
+  padding: 20px 0;
+  display: block;
+  position: relative;
+  transition: all 0.3s ease;
+}
+#navigation-bar a:hover {
+  color: #e74c3c;
+}
+#navigation-bar a::before {
+  content: "";
+  transition: all 0.4s ease-in-out;
+  position: absolute;
+  right: 50%;
+  left: 50%;
+  bottom: 0;
+  height: 2px;
+  background-color: #e74c3c;
+}
+#navigation-bar a:hover::before {
+  right: 0;
+  left: 0;
+}
+ 
+li {
+	list-style: none;
+}
+
+box{
+  width: 300px;
+  padding: 40px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  background: #191919;
+  text-align: center;
+}
+.box h1{
+  color: white;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+.box input[type = "text"],.box input[type = "password"]{
+  border:0;
+  background: none;
+  display: block;
+  margin: 20px auto;
+  text-align: center;
+  border: 2px solid #3498db;
+  padding: 14px 10px;
+  width: 400px;
+  outline: none;
+  color: white;
+  border-radius: 24px;
+  transition: 0.25s;
+}
+.box input[type = "text"]:focus,.box input[type = "password"]:focus{
+  width: 280px;
+  border-color: #2ecc71;
+}
+.box input[type = "submit"]{
+  border:0;
+  background: none;
+  display: block;
+  margin: 20px auto;
+  text-align: center;
+  border: 2px solid #2ecc71;
+  padding: 14px 40px;
+  outline: none;
+  color: white;
+  border-radius: 24px;
+  transition: 0.25s;
+  cursor: pointer;
+}
+.box input[type = "submit"]:hover{
+  background: #2ecc71;
+}
+
+.divf {
+margin-left:320px;
+border-radius:20px;
+box-sizing: border-box;
+width: 50%;
+border: 3px solid green;
+} 
+
+.ptag
+{
+-webkit-text-stroke: 1px white;
+   color: white;
+   text-shadow:
+       3px 3px 0 #000,
+     -1px -1px 0 #000,  
+      1px -1px 0 #000,
+      -1px 1px 0 #000,
+       1px 1px 0 #000;
+font-size:21px;
+}
